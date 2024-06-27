@@ -61,7 +61,7 @@ const Terminal = () => {
                     <div key={index}>
                         {entry.command && (
                             <div>
-                                <span className="prompt green">MUH@iBook-CalculatorPro:</span>
+                                <span className="prompt green">user@iBook-CalculatorPro:</span>
                                 <span className="prompt yellow">{entry.cwd}</span>
                                 <span className="prompt"> % </span>
                                 <span className="command">{entry.command}</span>
@@ -77,7 +77,7 @@ const Terminal = () => {
                     </div>
                 ))}
                 <div className="input-line">
-                    <span className="prompt green">MUH@iBook-CalculatorPro:</span>
+                    <span className="prompt green">user@iBook-CalculatorPro:</span>
                     <span className="prompt yellow">{pwd}</span>
                     <span className="prompt"> % </span>
                     <input
