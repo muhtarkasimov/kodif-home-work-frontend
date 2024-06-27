@@ -61,7 +61,9 @@ const Terminal = () => {
                     <div key={index}>
                         {entry.command && (
                             <div>
-                                <span className="prompt">MUH@iBook-CalculatorPro:{entry.cwd} % </span>
+                                <span className="prompt green">MUH@iBook-CalculatorPro:</span>
+                                <span className="prompt yellow">{entry.cwd}</span>
+                                <span className="prompt"> % </span>
                                 <span className="command">{entry.command}</span>
                             </div>
                         )}
@@ -72,23 +74,20 @@ const Terminal = () => {
                                 ))}
                             </div>
                         )}
-                        {!entry.command && !entry.output && (
-                            <div>
-                                <span className="prompt">MUH@iBook-CalculatorPro:{entry.cwd} % </span>
-                            </div>
-                        )}
                     </div>
                 ))}
-            </div>
-            <div className="input-line">
-                <span className="prompt">MUH@iBook-CalculatorPro:{pwd} % </span>
-                <input
-                    type="text"
-                    value={input}
-                    onChange={handleInputChange}
-                    onKeyDown={handleKeyDown}
-                    autoFocus
-                />
+                <div className="input-line">
+                    <span className="prompt green">MUH@iBook-CalculatorPro:</span>
+                    <span className="prompt yellow">{pwd}</span>
+                    <span className="prompt"> % </span>
+                    <input
+                        type="text"
+                        value={input}
+                        onChange={handleInputChange}
+                        onKeyDown={handleKeyDown}
+                        autoFocus
+                    />
+                </div>
             </div>
         </div>
     );

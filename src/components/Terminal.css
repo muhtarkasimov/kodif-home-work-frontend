@@ -25,9 +25,12 @@
     flex-shrink: 0;
 }
 
-.prompt {
-    margin-right: 5px;
+.prompt.green {
     color: #33ff33; /* Green color for the prompt */
+}
+
+.prompt.yellow {
+    color: #ffff00; /* Yellow color for the path */
 }
 
 .command {
