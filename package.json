@@ -13,9 +13,10 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "build": "react-scripts build && npm run postbuild",
+    "postbuild": "npm run copy-env && npm run copy-certs",
+    "copy-env": "copyfiles -u 1 .env build",
+    "copy-certs": "copyfiles -u 1 certs/**/* build/certs"
   },
   "eslintConfig": {
     "extends": [
