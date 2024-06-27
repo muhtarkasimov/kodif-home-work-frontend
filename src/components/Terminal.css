@@ -27,16 +27,20 @@
 
 .prompt {
     margin-right: 5px;
-    color: #00ff00;
+    color: #33ff33; /* Green color for the prompt */
 }
 
 .command {
-    color: #ffffff;
+    color: #ffffff; /* White color for the command */
 }
 
 .output {
     color: #c5c5c5;
     margin-left: 20px;
+}
+
+.error {
+    color: #ff3333; /* Red color for error messages */
 }
 
 input {

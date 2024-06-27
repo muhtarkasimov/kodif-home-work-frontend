@@ -3,7 +3,7 @@ import './Terminal.css';
 
 const Terminal = () => {
     const [input, setInput] = useState('');
-    const [cwd, setCwd] = useState('~');
+    const [pwd, setPwd] = useState('~');
     const [history, setHistory] = useState([]);
     const terminalRef = useRef(null);
 
@@ -14,7 +14,13 @@ const Terminal = () => {
     const handleKeyDown = async (e) => {
         if (e.key === 'Enter') {
             const command = input.trim();
-            const newHistory = [...history, { cwd, command }];
+            if (command === 'clear') {
+                setHistory([]);
+                setInput('');
+                return;
+            }
+
+            const newHistory = [...history, { cwd: pwd, command }];
             setHistory(newHistory);
             setInput('');
 
@@ -27,11 +33,19 @@ const Terminal = () => {
                     body: JSON.stringify({ payload: command }),
                 });
                 const data = await response.json();
-                setCwd(data.cwd);
-                setHistory([...newHistory, { cwd: data.cwd, output: data.cwd }]);
+                setPwd(data.pwd);
+                setHistory((prevHistory) => [
+                    ...prevHistory.slice(0, -1),
+                    { cwd: pwd, command, output: data.cwd },
+                    { cwd: data.pwd }
+                ]);
             } catch (error) {
                 console.error('Error:', error);
-                setHistory([...newHistory, { cwd, output: `Error: ${error.message}` }]);
+                setHistory((prevHistory) => [
+                    ...prevHistory.slice(0, -1),
+                    { cwd: pwd, command, output: `Error: ${error.message}` },
+                    { cwd: pwd }
+                ]);
             }
         }
     };
@@ -45,10 +59,12 @@ const Terminal = () => {
             <div className="history">
                 {history.map((entry, index) => (
                     <div key={index}>
-                        <div>
-                            <span className="prompt">MUH@iBook-CalculatorPro:{entry.cwd} $ </span>
-                            <span className="command">{entry.command}</span>
-                        </div>
+                        {entry.command && (
+                            <div>
+                                <span className="prompt">MUH@iBook-CalculatorPro:{entry.cwd} % </span>
+                                <span className="command">{entry.command}</span>
+                            </div>
+                        )}
                         {entry.output && (
                             <div className="output">
                                 {entry.output.split('\n').map((line, i) => (
@@ -56,11 +72,16 @@ const Terminal = () => {
                                 ))}
                             </div>
                         )}
+                        {!entry.command && !entry.output && (
+                            <div>
+                                <span className="prompt">MUH@iBook-CalculatorPro:{entry.cwd} % </span>
+                            </div>
+                        )}
                     </div>
                 ))}
             </div>
             <div className="input-line">
-                <span className="prompt">MUH@iBook-CalculatorPro:{cwd} $ </span>
+                <span className="prompt">MUH@iBook-CalculatorPro:{pwd} % </span>
                 <input
                     type="text"
                     value={input}
